@@ -5,184 +5,182 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Izaak</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=IBM+Plex+Sans:wght@300;400;600&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --bg: #060608;
-      --surface: #0d0d12;
-      --border: #16161f;
-      --text: #f0f0f5;
-      --muted: #4a4a6a;
-      --blue: #3b82f6;
-      --blue-dim: #1d4ed8;
-      --blue-glow: rgba(59,130,246,0.12);
-    }
     body {
-      background: var(--bg); color: var(--text);
-      font-family: 'Inter', sans-serif;
+      background: #050505; color: #c8d4c0;
+      font-family: 'IBM Plex Mono', monospace;
       min-height: 100vh; display: flex; align-items: center;
       justify-content: center; padding: 2rem 1rem;
+      position: relative; overflow: hidden;
+    }
+    body::before {
+      content: ''; position: fixed; inset: 0;
+      background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px);
+      pointer-events: none; z-index: 0;
     }
     body::after {
       content: ''; position: fixed;
-      width: 600px; height: 600px;
-      background: radial-gradient(circle, rgba(59,130,246,0.06) 0%, transparent 70%);
-      top: -100px; right: -200px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(74,222,128,0.04) 0%, transparent 70%);
+      bottom: -100px; left: -100px;
       pointer-events: none; z-index: 0;
     }
-    .container { width: 100%; max-width: 400px; position: relative; z-index: 1; }
+    .container { width: 100%; max-width: 420px; position: relative; z-index: 1; }
 
     /* ── Header ── */
-    .header { margin-bottom: 2.8rem; opacity: 0; animation: blurUp 0.6s ease forwards; }
-    .header-row { display: flex; align-items: center; gap: 0.7rem; flex-wrap: wrap; }
+    .header { margin-bottom: 2.5rem; opacity: 0; animation: blurUp 0.6s ease forwards; }
+    .prompt { font-size: 0.75rem; color: #3a4a35; margin-bottom: 0.35rem; letter-spacing: 0.05em; }
+    .header-row { display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap; }
     .header h1 {
-      font-size: 2.5rem; font-weight: 600; letter-spacing: -0.04em;
-      color: var(--blue); line-height: 1;
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 2.5rem; font-weight: 600; letter-spacing: -0.03em;
+      color: #4ade80; line-height: 1;
     }
+    .cursor {
+      display: inline-block; width: 3px; height: 2.2rem;
+      background: #4ade80; margin-left: 4px; vertical-align: middle;
+      animation: blink 1s step-end infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
 
     /* ── Last.fm chip ── */
     .fm-chip {
-      display: inline-flex; align-items: center; gap: 7px;
-      padding: 5px 10px 5px 6px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 8px;
+      display: inline-flex; align-items: center; gap: 9px;
+      padding: 7px 12px 7px 8px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid #1e2e1a;
+      border-radius: 6px;
       text-decoration: none;
       opacity: 0;
-      transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
-      max-width: 210px;
+      transition: background 0.2s, border-color 0.2s;
+      max-width: 240px;
       overflow: hidden;
       animation: blurUp 0.6s ease 0.2s forwards;
       flex-shrink: 0;
     }
-    .fm-chip:hover {
-      border-color: var(--blue-dim);
-      background: var(--blue-glow);
-      box-shadow: 0 0 0 1px rgba(59,130,246,0.1);
-    }
+    .fm-chip:hover { background: rgba(74,222,128,0.04); border-color: #2a3a25; }
     .fm-art {
-      width: 28px; height: 28px; border-radius: 5px; flex-shrink: 0;
-      background: #111118; object-fit: cover;
+      width: 36px; height: 36px; border-radius: 4px; flex-shrink: 0;
+      background: #111; object-fit: cover;
     }
     .fm-art-placeholder {
-      width: 28px; height: 28px; border-radius: 5px; flex-shrink: 0;
-      background: #111118; border: 1px solid var(--border);
+      width: 36px; height: 36px; border-radius: 4px; flex-shrink: 0;
+      background: #111; border: 1px solid #1e2e1a;
       display: flex; align-items: center; justify-content: center;
     }
-    .fm-art-placeholder svg { width: 13px; height: 13px; fill: var(--muted); }
+    .fm-art-placeholder svg { width: 16px; height: 16px; fill: #3a4a35; }
     .fm-info { display: flex; flex-direction: column; overflow: hidden; min-width: 0; }
-    .fm-track  { font-size: 0.63rem; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 500; line-height: 1.3; }
-    .fm-artist { font-size: 0.56rem; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 1.3; margin-top: 1px; }
+    .fm-track  { font-size: 0.72rem; color: #c8d4c0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 500; font-family: 'IBM Plex Sans', sans-serif; line-height: 1.3; }
+    .fm-artist { font-size: 0.63rem; color: #3a4a35; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: 'IBM Plex Mono', monospace; line-height: 1.3; margin-top: 2px; }
     .fm-indicator { display: flex; align-items: flex-end; gap: 2px; flex-shrink: 0; padding-bottom: 1px; }
     .fm-bar {
-      width: 2.5px; background: var(--blue); border-radius: 1px;
+      width: 3px; background: #4ade80; border-radius: 1px;
       transform-origin: bottom;
     }
-    .fm-bar:nth-child(1) { height: 6px; animation: barBounce 0.9s ease-in-out 0s   infinite alternate; }
-    .fm-bar:nth-child(2) { height: 10px; animation: barBounce 0.9s ease-in-out 0.3s infinite alternate; }
-    .fm-bar:nth-child(3) { height: 6px; animation: barBounce 0.9s ease-in-out 0.6s infinite alternate; }
-    @keyframes barBounce {
-      0%   { transform: scaleY(0.25); }
-      100% { transform: scaleY(1); }
-    }
+    .fm-bar:nth-child(1) { height: 7px;  animation: barBounce 0.9s ease-in-out 0s   infinite alternate; }
+    .fm-bar:nth-child(2) { height: 12px; animation: barBounce 0.9s ease-in-out 0.3s infinite alternate; }
+    .fm-bar:nth-child(3) { height: 7px;  animation: barBounce 0.9s ease-in-out 0.6s infinite alternate; }
+    @keyframes barBounce { 0%{transform:scaleY(0.25)} 100%{transform:scaleY(1)} }
     .fm-history-icon { display: flex; align-items: center; flex-shrink: 0; }
-    .fm-history-icon svg { width: 11px; height: 11px; fill: none; stroke: var(--muted); stroke-width: 1.5; }
+    .fm-history-icon svg { width: 13px; height: 13px; fill: none; stroke: #3a4a35; stroke-width: 1.5; }
 
     /* ── Section label ── */
     .section-label {
-      font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase;
-      color: var(--muted); margin-bottom: 0.5rem; opacity: 0;
+      font-size: 0.67rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: #2a3a25; margin-bottom: 0.5rem; opacity: 0;
     }
     .group { margin-bottom: 1.6rem; }
 
     /* ── Link items ── */
     .link-item {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 0.8rem 0.9rem; background: var(--surface); border: 1px solid var(--border);
-      border-radius: 8px; text-decoration: none; color: var(--text);
+      padding: 0.85rem 1rem; background: rgba(255,255,255,0.02);
+      border: 1px solid #141a12; border-radius: 4px;
+      text-decoration: none; color: #c8d4c0;
       margin-bottom: 0.4rem;
-      transition: border-color 0.2s, background 0.2s, box-shadow 0.2s, transform 0.2s;
+      transition: background 0.2s, border-color 0.2s, transform 0.2s;
       opacity: 0; animation: blurUp 0.6s ease forwards;
+      position: relative; overflow: hidden;
     }
-    .link-item:hover {
-      border-color: var(--blue-dim);
-      background: var(--blue-glow);
-      box-shadow: 0 0 0 1px rgba(59,130,246,0.1);
-      transform: translateY(-1px);
+    .link-item::before {
+      content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+      width: 2px; background: #4ade80; opacity: 0; transition: opacity 0.2s;
     }
-    .link-left { display: flex; align-items: center; gap: 0.7rem; }
+    .link-item:hover { background: rgba(74,222,128,0.04); border-color: #1e2e1a; transform: translateY(-1px); }
+    .link-item:hover::before { opacity: 1; }
+    .link-left { display: flex; align-items: center; gap: 0.75rem; }
     .link-icon {
-      width: 30px; height: 30px; border-radius: 6px;
-      background: #111118; border: 1px solid var(--border);
+      width: 32px; height: 32px; border-radius: 3px;
+      background: rgba(255,255,255,0.03); border: 1px solid #141a12;
       display: flex; align-items: center; justify-content: center; flex-shrink: 0;
     }
-    .link-icon svg { width: 14px; height: 14px; fill: var(--muted); transition: fill 0.2s; }
-    .link-item:hover .link-icon svg { fill: var(--blue); }
-    .link-name { font-size: 0.8rem; font-weight: 500; color: var(--text); }
-    .link-handle {
-      font-size: 0.68rem; color: var(--muted); margin-top: 0.1rem;
-      display: flex; align-items: center; gap: 0.35rem; flex-wrap: wrap;
-    }
-    .link-arrow { color: var(--muted); font-size: 0.7rem; transition: color 0.2s; flex-shrink: 0; }
-    .link-item:hover .link-arrow { color: var(--blue); }
+    .link-icon svg { width: 15px; height: 15px; fill: #3a4a35; transition: fill 0.2s; }
+    .link-item:hover .link-icon svg { fill: #4ade80; }
+    .link-name { font-size: 0.87rem; font-weight: 500; color: #c8d4c0; font-family: 'IBM Plex Sans', sans-serif; }
+    .link-handle { font-size: 0.72rem; color: #3a4a35; margin-top: 0.1rem; display: flex; align-items: center; gap: 0.35rem; flex-wrap: wrap; font-family: 'IBM Plex Mono', monospace; }
+    .link-arrow { color: #1e2e1a; font-size: 0.78rem; transition: color 0.2s; flex-shrink: 0; }
+    .link-item:hover .link-arrow { color: #4ade80; }
 
-    /* ── Inline badges (karma, commit, discord status) ── */
+    /* ── Inline badges ── */
     .inline-badge {
-      font-size: 0.56rem; color: var(--blue);
-      background: rgba(59,130,246,0.08);
-      border: 1px solid rgba(59,130,246,0.2);
-      border-radius: 3px; padding: 2px 6px;
+      font-size: 0.62rem; color: #4ade80;
+      background: rgba(74,222,128,0.06);
+      border: 1px solid rgba(74,222,128,0.15);
+      border-radius: 2px; padding: 2px 6px;
       display: inline-flex; align-items: center; gap: 4px;
       white-space: nowrap; font-variant-numeric: tabular-nums;
     }
-    .inline-badge.discord-online  { color: #4ade80; background: rgba(74,222,128,0.06); border-color: rgba(74,222,128,0.25); }
-    .inline-badge.discord-idle    { color: #fbbf24; background: rgba(251,191,36,0.06);  border-color: rgba(251,191,36,0.25); }
-    .inline-badge.discord-dnd     { color: #f87171; background: rgba(248,113,113,0.06); border-color: rgba(248,113,113,0.25); }
-    .inline-badge.discord-offline { color: var(--muted); background: transparent; border-color: var(--border); }
-    .status-circle {
-      width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0;
-      background: currentColor;
-    }
+    .inline-badge.discord-online  { color: #4ade80; background: rgba(74,222,128,0.06);  border-color: rgba(74,222,128,0.25); }
+    .inline-badge.discord-idle    { color: #fbbf24; background: rgba(251,191,36,0.06);   border-color: rgba(251,191,36,0.25); }
+    .inline-badge.discord-dnd     { color: #f87171; background: rgba(248,113,113,0.06);  border-color: rgba(248,113,113,0.25); }
+    .inline-badge.discord-offline { color: #3a4a35; background: transparent;             border-color: #1e2e1a; }
+    .status-circle { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; background: currentColor; }
     .inline-badge.discord-online .status-circle { animation: pulse 2s infinite; }
     @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.35} }
 
-    /* ── Status badge on FluxusTV ── */
+    /* ── FluxusTV status badge ── */
     .status-badge {
       display: inline-flex; align-items: center; gap: 4px;
-      font-size: 0.56rem; padding: 2px 6px; border-radius: 3px;
-      border: 1px solid rgba(59,130,246,0.2);
-      background: rgba(59,130,246,0.08);
-      color: var(--muted); font-variant-numeric: tabular-nums;
+      font-size: 0.62rem; padding: 2px 6px; border-radius: 2px;
+      border: 1px solid rgba(74,222,128,0.15);
+      background: rgba(74,222,128,0.06);
+      color: #3a4a35; font-variant-numeric: tabular-nums;
       transition: color 0.3s, border-color 0.3s;
     }
-    .status-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--muted); flex-shrink: 0; transition: background 0.3s; }
+    .status-dot { width: 5px; height: 5px; border-radius: 50%; background: #2a3a25; flex-shrink: 0; transition: background 0.3s; }
     .status-badge.up   { color: #4ade80; border-color: rgba(74,222,128,0.25); background: rgba(74,222,128,0.06); }
     .status-badge.up   .status-dot { background: #4ade80; box-shadow: 0 0 5px #4ade80; animation: pulse 2s infinite; }
     .status-badge.down { color: #f87171; border-color: rgba(248,113,113,0.25); background: rgba(248,113,113,0.06); }
     .status-badge.down .status-dot { background: #f87171; }
 
     /* ── Projects ── */
-    .project-row { display: flex; gap: 0.4rem; margin-bottom: 0.4rem; opacity: 0; animation: blurUp 0.6s ease forwards; }
+    .project-row { display: flex; gap: 0.35rem; margin-bottom: 0.4rem; opacity: 0; animation: blurUp 0.6s ease forwards; }
     .project-main {
       flex: 1; display: flex; align-items: center; justify-content: space-between;
-      padding: 0.8rem 0.9rem; background: var(--surface); border: 1px solid var(--border);
-      border-radius: 8px; text-decoration: none; color: var(--text);
-      transition: border-color 0.2s, background 0.2s, box-shadow 0.2s, transform 0.2s; min-width: 0;
+      padding: 0.85rem 1rem; background: rgba(255,255,255,0.02); border: 1px solid #141a12;
+      border-radius: 4px; text-decoration: none; color: #c8d4c0;
+      transition: background 0.2s, border-color 0.2s, transform 0.2s; min-width: 0; position: relative; overflow: hidden;
     }
-    .project-main:hover { border-color: var(--blue-dim); background: var(--blue-glow); box-shadow: 0 0 0 1px rgba(59,130,246,0.1); transform: translateY(-1px); }
-    .project-side { display: flex; flex-direction: column; gap: 0.4rem; flex-shrink: 0; }
+    .project-main::before {
+      content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+      width: 2px; background: #4ade80; opacity: 0; transition: opacity 0.2s;
+    }
+    .project-main:hover { background: rgba(74,222,128,0.04); border-color: #1e2e1a; transform: translateY(-1px); }
+    .project-main:hover::before { opacity: 1; }
+    .project-side { display: flex; flex-direction: column; gap: 0.35rem; flex-shrink: 0; }
     .side-btn {
-      width: 36px; flex: 1; display: flex; flex-direction: column; align-items: center;
-      justify-content: center; gap: 3px; background: var(--surface); border: 1px solid var(--border);
-      border-radius: 8px; text-decoration: none; color: var(--muted);
-      transition: border-color 0.2s, color 0.2s, background 0.2s, transform 0.2s; padding: 5px 4px;
+      width: 38px; flex: 1; display: flex; flex-direction: column; align-items: center;
+      justify-content: center; gap: 3px; background: rgba(255,255,255,0.02); border: 1px solid #141a12;
+      border-radius: 4px; text-decoration: none; color: #2a3a25;
+      transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.2s; padding: 5px 4px;
     }
-    .side-btn:hover { border-color: var(--blue-dim); color: var(--blue); background: var(--blue-glow); transform: translateY(-1px); }
-    .side-btn svg { width: 12px; height: 12px; fill: currentColor; }
-    .side-btn-label { font-size: 0.48rem; letter-spacing: 0.05em; text-transform: uppercase; }
+    .side-btn:hover { background: rgba(74,222,128,0.04); border-color: #1e2e1a; color: #4ade80; transform: translateY(-1px); }
+    .side-btn svg { width: 13px; height: 13px; fill: currentColor; }
+    .side-btn-label { font-size: 0.52rem; letter-spacing: 0.05em; text-transform: uppercase; }
 
-    footer { text-align: center; font-size: 0.6rem; color: #1e1e2e; margin-top: 1.5rem; opacity: 0; animation: blurUp 0.6s ease 1.1s forwards; }
+    footer { text-align: center; font-size: 0.65rem; color: #141a12; margin-top: 1.5rem; letter-spacing: 0.08em; opacity: 0; animation: blurUp 0.6s ease 1.1s forwards; }
 
     /* ── Animation ── */
     @keyframes blurUp {
@@ -202,8 +200,9 @@
 
   <!-- Header -->
   <div class="header">
+    <div class="prompt">~ / links</div>
     <div class="header-row">
-      <h1>Izaak</h1>
+      <h1>Izaak<span class="cursor"></span></h1>
       <a id="fm-chip" href="https://www.last.fm/user/izaak77" target="_blank" class="fm-chip" style="display:none">
         <div class="fm-art-placeholder" id="fm-art-wrap">
           <svg viewBox="0 0 24 24"><path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3z"/></svg>
@@ -251,7 +250,7 @@
     <p class="section-label pl">Projects</p>
     <div class="project-row p1">
       <a href="https://s1.fluxus.org/" target="_blank" class="project-main">
-        <div class="link-left"><div class="link-icon"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21" fill="#4a4a6a"/></svg></div>
+        <div class="link-left"><div class="link-icon"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21" fill="#3a4a35"/></svg></div>
           <div>
             <div class="link-name">FluxusTV</div>
             <div class="link-handle">
@@ -262,11 +261,11 @@
         <span class="link-arrow">↗</span>
       </a>
       <div class="project-side">
-        <a href="https://github.com/FuckCSS/StreamApp-v2" target="_blank" class="side-btn" title="Source code">
+        <a href="https://github.com/FuckCSS/StreamApp-v2" target="_blank" class="side-btn" title="Source">
           <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
           <span class="side-btn-label">src</span>
         </a>
-        <a href="https://tv.fluxus.org/" target="_blank" class="side-btn" title="Alt link">
+        <a href="https://tv.fluxus.org/" target="_blank" class="side-btn" title="Alt">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
           <span class="side-btn-label">alt</span>
         </a>
@@ -297,7 +296,6 @@ async function fetchLastFm() {
   const trackEl = document.getElementById('fm-track');
   const artEl   = document.getElementById('fm-artist');
   const ind     = document.getElementById('fm-indicator');
-  const artW    = document.getElementById('fm-art-wrap');
   try {
     const r = await fetch(
       'https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks' +
@@ -312,11 +310,11 @@ async function fetchLastFm() {
     const img    = track.image?.find(i => i.size === 'small')?.['#text'];
     trackEl.textContent = name;
     artEl.textContent   = artist;
-    if (img && !img.includes('2a96cbd8b46e442fc41c2b86b821562f')) {
+    const artW = document.getElementById('fm-art-wrap');
+    if (artW && img && !img.includes('2a96cbd8b46e442fc41c2b86b821562f')) {
       const el = document.createElement('img');
       el.className = 'fm-art'; el.src = img; el.alt = '';
-      const existing = document.getElementById('fm-art-wrap');
-      if (existing) existing.replaceWith(el);
+      artW.replaceWith(el);
     }
     if (live) {
       ind.innerHTML = '<div class="fm-bar"></div><div class="fm-bar"></div><div class="fm-bar"></div>';
@@ -364,20 +362,19 @@ fetchGitHub();
 
 // ── Discord status via Lanyard ────────────────────────────────────
 async function fetchDiscord() {
-  const badge  = document.getElementById('discord-status');
-  const label  = document.getElementById('discord-status-text');
+  const badge = document.getElementById('discord-status');
+  const label = document.getElementById('discord-status-text');
   try {
     const r = await fetch('https://api.lanyard.rest/v1/users/1329547310887207025');
     const d = await r.json();
     if (!d.success) return;
-    const status = d.data.discord_status; // online | idle | dnd | offline
     const map = {
       online:  { cls: 'discord-online',  text: 'online' },
       idle:    { cls: 'discord-idle',    text: 'idle' },
       dnd:     { cls: 'discord-dnd',     text: 'do not disturb' },
       offline: { cls: 'discord-offline', text: 'offline' },
     };
-    const s = map[status] || map.offline;
+    const s = map[d.data.discord_status] || map.offline;
     badge.className = 'inline-badge ' + s.cls;
     label.textContent = s.text;
   } catch(e) {}
