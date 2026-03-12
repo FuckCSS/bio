@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects | Izaak</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --bg: #060608; --surface: #0d0d12; --border: #16161f; --text: #f0f0f5; --muted: #4a4a6a; --blue: #3b82f6; --blue-dim: #1d4ed8; --blue-glow: rgba(59,130,246,0.12); }
+    body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; min-height: 100vh; display: flex; align-items: flex-start; justify-content: center; padding: 3rem 1rem; }
+    body::after { content: ''; position: fixed; width: 600px; height: 600px; background: radial-gradient(circle, rgba(59,130,246,0.06) 0%, transparent 70%); top: -100px; right: -200px; pointer-events: none; z-index: 0; }
+    .container { width: 100%; max-width: 480px; position: relative; z-index: 1; }
+    .back { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.72rem; color: var(--muted); text-decoration: none; margin-bottom: 2rem; transition: color 0.2s; opacity: 0; animation: blurUp 0.5s ease forwards; }
+    .back:hover { color: var(--blue); }
+    .page-title { font-size: 1.4rem; font-weight: 600; letter-spacing: -0.04em; margin-bottom: 0.3rem; opacity: 0; animation: blurUp 0.5s ease 0.05s forwards; }
+    .page-sub { font-size: 0.72rem; color: var(--muted); margin-bottom: 1.8rem; opacity: 0; animation: blurUp 0.5s ease 0.1s forwards; }
+    .project-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; margin-bottom: 0.6rem; text-decoration: none; color: var(--text); display: block; transition: border-color 0.2s, background 0.2s, transform 0.2s, box-shadow 0.2s; opacity: 0; animation: blurUp 0.5s ease forwards; overflow: hidden; }
+    .project-card:hover { border-color: var(--blue-dim); background: rgba(59,130,246,0.03); transform: translateY(-1px); box-shadow: 0 4px 24px rgba(59,130,246,0.06); }
+    .card-main { display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.1rem; }
+    .card-left { display: flex; align-items: center; gap: 0.85rem; }
+    .card-icon { width: 36px; height: 36px; border-radius: 8px; background: #111118; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: border-color 0.2s; }
+    .project-card:hover .card-icon { border-color: rgba(59,130,246,0.25); }
+    .card-icon svg { width: 16px; height: 16px; fill: none; stroke: var(--muted); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.2s; }
+    .project-card:hover .card-icon svg { stroke: var(--blue); }
+    .card-icon .icon-play { fill: var(--muted); stroke: none; transition: fill 0.2s; }
+    .project-card:hover .card-icon .icon-play { fill: var(--blue); }
+    .card-name { font-size: 0.9rem; font-weight: 500; margin-bottom: 0.2rem; }
+    .card-desc { font-size: 0.7rem; color: var(--muted); }
+    .card-right { display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; }
+    .card-arrow { color: var(--muted); font-size: 0.72rem; transition: color 0.2s; }
+    .project-card:hover .card-arrow { color: var(--blue); }
+    .status-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 0.6rem; padding: 2px 6px; border-radius: 3px; border: 1px solid var(--border); background: transparent; color: var(--muted); font-variant-numeric: tabular-nums; }
+    .status-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--muted); flex-shrink: 0; }
+    .status-badge.up { color: #4ade80; border-color: rgba(74,222,128,0.25); background: rgba(74,222,128,0.06); }
+    .status-badge.up .status-dot { background: #4ade80; box-shadow: 0 0 5px #4ade80; animation: pulse 2s infinite; }
+    .status-badge.down { color: #f87171; border-color: rgba(248,113,113,0.25); background: rgba(248,113,113,0.06); }
+    .status-badge.down .status-dot { background: #f87171; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.35} }
+    .card-tags { padding: 0 1.1rem 0.85rem; display: flex; gap: 0.35rem; flex-wrap: wrap; }
+    .tag { font-size: 0.58rem; padding: 2px 7px; border-radius: 3px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); color: var(--muted); }
+    footer { text-align: center; font-size: 0.62rem; color: #1e1e2e; margin-top: 2rem; opacity: 0; animation: blurUp 0.5s ease 0.7s forwards; }
+    @keyframes blurUp { from { opacity: 0; transform: translateY(8px); filter: blur(4px); } to { opacity: 1; transform: translateY(0); filter: blur(0); } }
+    .c1 { animation-delay: 0.15s; } .c2 { animation-delay: 0.23s; } .c3 { animation-delay: 0.31s; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <a href="/" class="back">← back</a>
+  <div class="page-title">Projects</div>
+  <div class="page-sub">things i've built</div>
+
+  <a href="/projects/fluxtv" class="project-card c1">
+    <div class="card-main">
+      <div class="card-left">
+        <div class="card-icon"><svg viewBox="0 0 24 24"><polygon class="icon-play" points="5,3 19,12 5,21"/></svg></div>
+        <div>
+          <div class="card-name">FluxTV</div>
+          <div class="card-desc">3M+ free movies &amp; TV shows</div>
+        </div>
+      </div>
+      <div class="card-right">
+        <span class="status-badge" id="status-fluxtv"><span class="status-dot"></span><span id="status-fluxtv-text">—</span></span>
+        <span class="card-arrow">↗</span>
+      </div>
+    </div>
+    <div class="card-tags"><span class="tag">streaming</span><span class="tag">movies</span><span class="tag">tv</span></div>
+  </a>
+
+  <a href="/srpbot" class="project-card c2">
+    <div class="card-main">
+      <div class="card-left">
+        <div class="card-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/></svg></div>
+        <div>
+          <div class="card-name">SRPbot</div>
+          <div class="card-desc">Sparx Reader solver</div>
+        </div>
+      </div>
+      <div class="card-right"><span class="card-arrow">↗</span></div>
+    </div>
+    <div class="card-tags"><span class="tag">bot</span><span class="tag">automation</span><span class="tag">education</span></div>
+  </a>
+
+  <a href="/fluxus" class="project-card c3">
+    <div class="card-main">
+      <div class="card-left">
+        <div class="card-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+        <div>
+          <div class="card-name">fluxus.org</div>
+          <div class="card-desc">old FluxTV</div>
+        </div>
+      </div>
+      <div class="card-right"><span class="card-arrow">↗</span></div>
+    </div>
+    <div class="card-tags"><span class="tag">streaming</span><span class="tag">legacy</span></div>
+  </a>
+
+  <footer>izaak</footer>
+</div>
+<script>
+async function fetchStatus() {
+  try {
+    const r = await fetch('https://fluxustv-status.izaak-aadi2012.workers.dev/');
+    const d = await r.json();
+    const m = d.monitors?.find(m => m.friendly_name === 'flux.k.vu');
+    if (!m) return;
+    const up = m.status === 2;
+    const avg = m.average_response_time ? Math.round(parseFloat(m.average_response_time)) + 'ms' : null;
+    document.getElementById('status-fluxtv').className = 'status-badge ' + (up ? 'up' : 'down');
+    document.getElementById('status-fluxtv-text').textContent = up ? (avg || 'online') : 'down';
+  } catch(e) {}
+}
+fetchStatus();
+</script>
+</body>
+</html>
