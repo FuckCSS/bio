@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>fluxus.org | Izaak</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --bg: #060608; --surface: #0d0d12; --border: #16161f; --text: #f0f0f5; --muted: #4a4a6a; --blue: #3b82f6; --blue-dim: #1d4ed8; --blue-glow: rgba(59,130,246,0.12); }
+    body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; min-height: 100vh; display: flex; align-items: flex-start; justify-content: center; padding: 3rem 1rem; }
+    body::after { content: ''; position: fixed; width: 600px; height: 600px; background: radial-gradient(circle, rgba(59,130,246,0.06) 0%, transparent 70%); top: -100px; right: -200px; pointer-events: none; z-index: 0; }
+    .container { width: 100%; max-width: 400px; position: relative; z-index: 1; }
+    .back { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.72rem; color: var(--muted); text-decoration: none; margin-bottom: 2rem; transition: color 0.2s; opacity: 0; animation: blurUp 0.5s ease forwards; }
+    .back:hover { color: var(--blue); }
+    .page-title { font-size: 1.4rem; font-weight: 600; letter-spacing: -0.04em; margin-bottom: 0.25rem; opacity: 0; animation: blurUp 0.5s ease 0.05s forwards; }
+    .page-sub { font-size: 0.72rem; color: var(--muted); margin-bottom: 1.8rem; opacity: 0; animation: blurUp 0.5s ease 0.1s forwards; }
+    .link-item { display: flex; align-items: center; justify-content: space-between; padding: 0.85rem 0.9rem; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; text-decoration: none; color: var(--text); margin-bottom: 0.4rem; transition: border-color 0.2s, background 0.2s, transform 0.2s; opacity: 0; animation: blurUp 0.5s ease forwards; }
+    .link-item:hover { border-color: var(--blue-dim); background: var(--blue-glow); transform: translateY(-1px); }
+    .link-left { display: flex; align-items: center; gap: 0.7rem; }
+    .link-icon { width: 32px; height: 32px; border-radius: 6px; background: #111118; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .link-icon svg { width: 14px; height: 14px; fill: var(--muted); transition: fill 0.2s; }
+    .link-item:hover .link-icon svg { fill: var(--blue); }
+    .link-name { font-size: 0.85rem; font-weight: 500; }
+    .link-sub { font-size: 0.67rem; color: var(--muted); margin-top: 0.1rem; }
+    .link-arrow { color: var(--muted); font-size: 0.72rem; transition: color 0.2s; }
+    .link-item:hover .link-arrow { color: var(--blue); }
+    footer { text-align: center; font-size: 0.62rem; color: #1e1e2e; margin-top: 2rem; opacity: 0; animation: blurUp 0.5s ease 0.8s forwards; }
+    @keyframes blurUp { from { opacity: 0; transform: translateY(8px); filter: blur(4px); } to { opacity: 1; transform: translateY(0); filter: blur(0); } }
+    .l1 { animation-delay: 0.15s; } .l2 { animation-delay: 0.22s; } .l3 { animation-delay: 0.29s; } .l4 { animation-delay: 0.36s; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <a href="/" class="back">← back</a>
+  <div class="page-title">fluxus.org</div>
+  <div class="page-sub">old FluxTV — pick a server</div>
+
+  <a href="https://s1.fluxus.org/" target="_blank" class="link-item l1">
+    <div class="link-left">
+      <div class="link-icon"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+      <div><div class="link-name">s1.fluxus.org</div><div class="link-sub">server 1</div></div>
+    </div>
+    <span class="link-arrow">↗</span>
+  </a>
+
+  <a href="https://s2.fluxus.org/" target="_blank" class="link-item l2">
+    <div class="link-left">
+      <div class="link-icon"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+      <div><div class="link-name">s2.fluxus.org</div><div class="link-sub">server 2</div></div>
+    </div>
+    <span class="link-arrow">↗</span>
+  </a>
+
+  <a href="https://s3.fluxus.org/" target="_blank" class="link-item l3">
+    <div class="link-left">
+      <div class="link-icon"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+      <div><div class="link-name">s3.fluxus.org</div><div class="link-sub">server 3</div></div>
+    </div>
+    <span class="link-arrow">↗</span>
+  </a>
+
+  <a href="https://s4.fluxus.org/" target="_blank" class="link-item l4">
+    <div class="link-left">
+      <div class="link-icon"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+      <div><div class="link-name">s4.fluxus.org</div><div class="link-sub">server 4</div></div>
+    </div>
+    <span class="link-arrow">↗</span>
+  </a>
+
+  <footer>izaak</footer>
+</div>
+</body>
+</html>
