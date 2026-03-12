@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SRPbot | Izaak</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --bg: #060608; --surface: #0d0d12; --border: #16161f; --text: #f0f0f5; --muted: #4a4a6a; --blue: #3b82f6; --blue-dim: #1d4ed8; --blue-glow: rgba(59,130,246,0.12); }
+    body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; min-height: 100vh; display: flex; align-items: flex-start; justify-content: center; padding: 3rem 1rem; }
+    body::after { content: ''; position: fixed; width: 600px; height: 600px; background: radial-gradient(circle, rgba(59,130,246,0.06) 0%, transparent 70%); top: -100px; right: -200px; pointer-events: none; z-index: 0; }
+    .container { width: 100%; max-width: 480px; position: relative; z-index: 1; }
+    .back { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.72rem; color: var(--muted); text-decoration: none; margin-bottom: 2rem; transition: color 0.2s; opacity: 0; animation: blurUp 0.5s ease forwards; }
+    .back:hover { color: var(--blue); }
+    .project-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.8rem; opacity: 0; animation: blurUp 0.5s ease 0.05s forwards; }
+    .project-icon { width: 48px; height: 48px; border-radius: 10px; background: #111118; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .project-icon svg { width: 20px; height: 20px; fill: none; stroke: var(--blue); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .project-title { font-size: 1.4rem; font-weight: 600; letter-spacing: -0.04em; }
+    .project-desc { font-size: 0.78rem; color: var(--muted); margin-top: 0.2rem; }
+    .section { margin-bottom: 1.4rem; opacity: 0; animation: blurUp 0.5s ease forwards; }
+    .section-label { font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.6rem; }
+    .video-wrap { border-radius: 10px; overflow: hidden; border: 1px solid var(--border); background: #000; aspect-ratio: 16/9; }
+    .video-wrap iframe { width: 100%; height: 100%; display: block; border: none; }
+    footer { text-align: center; font-size: 0.62rem; color: #1e1e2e; margin-top: 2rem; opacity: 0; animation: blurUp 0.5s ease 0.6s forwards; }
+    @keyframes blurUp { from { opacity: 0; transform: translateY(8px); filter: blur(4px); } to { opacity: 1; transform: translateY(0); filter: blur(0); } }
+    .s1 { animation-delay: 0.12s; } .s2 { animation-delay: 0.20s; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <a href="/" class="back">← back</a>
+
+  <div class="project-header">
+    <div class="project-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/></svg></div>
+    <div>
+      <div class="project-title">SRPbot</div>
+      <div class="project-desc">Sparx Reader solver</div>
+    </div>
+  </div>
+
+  <div class="section s1">
+    <div class="section-label">Demo</div>
+    <div class="video-wrap">
+      <iframe src="https://www.youtube.com/embed/UJE9HMwBt1w" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+    </div>
+  </div>
+
+  <footer>izaak</footer>
+</div>
+</body>
+</html>
